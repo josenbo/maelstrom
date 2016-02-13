@@ -22,6 +22,13 @@ Beziehungen untereinander (Statusmodell der Verarbeitung).
 
 ### Konfiguration lesen [GET]
 
+Ruft die aktuelle Einstellungen ab. 
+Hierfür sind keine Parameter erforderlich.
+Die configuration_id in der Antwort kann zur Überprüfung
+auf Veränderungen verwendet werden. Es ist gewärleistet,
+dass jede Änderung der Konfiguration zu einer neuen und
+eindeutigen configuration_id führt.
+
 + Response 200 (application/json)
 
         {
@@ -43,4 +50,39 @@ Beziehungen untereinander (Statusmodell der Verarbeitung).
                         ]
                 }
             ]
+        }
+
+## Testumgebungen [/environments]
+
+Testumgebungen stehen autonom nebeneinander. Das Einspielen 
+von Ereignissen und das Abrufen von Ergebnissen spielt sich 
+immer innerhalb einer konkreten Testumgebung ab.
+
+### Liste der Testumgebungen lesen [GET]
+
+Ruft die Liste der verfügbaren Testumgebungen ab.
+
++ Response 200 (application/json)
+
+        [
+            {
+                "environment_id": "DAT",
+                "is_active": true
+            }
+        ]
+
+### Testumgebung [/environments/{environment_id}]
+
++ Parameters
+    + environment_id (string) - Kennung der Testumgebung
+
+#### Information zu einer Testumgebung lesen [GET]
+
+Ruft informationen zu einer Testumgebung ab.
+
++ Response 200 (application/json)
+
+        {
+            "environment_id": "DAT",
+            "is_active": true
         }
