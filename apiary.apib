@@ -1,80 +1,46 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
 
 # Maelstrom
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Einspielen von ODS Ereignissen in die TEI-Eingangsqueues der 
+unterschiedlichen Testumgebungen. 
 
-## Questions Collection [/questions]
+ODS Ereignisse können einzeln oder gebündelt übergeben werden. 
+Zu einem späteren Zeitpunkt kann der Verarbeitungsstand der 
+Ereignisse abgerufen werden.
 
-### List All Questions [GET]
+Das Protokoll würde es auch erlauben, PackageNotifications 
+in ODS-Ausgangsqueues zu übertragen. Diese Funktionalität 
+wird aber noch nicht unterstützt. 
+
+## Konfiguration [/configuration]
+
+Liefert Informationen über die Einrichtung der 
+Verarbeitungsprozesse. Im Moment ist das vor allem 
+die Liste der Verarbeitungszustände und deren 
+Beziehungen untereinander (Statusmodell der Verarbeitung).
+
+### Konfiguration lesen [GET]
 
 + Response 200 (application/json)
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
+            "configuration_id": "CFG-4711",
+            "states": [
+                {
+                    "state_id": "State1",
+                    "description": "some text (optional)",
+                    "is_initial_state": true,
+                    "is_final_state": false,
+                    "has_failed": false,
+                    "predecessors": [
+                            "State2",
+                            "State3"
+                        ],
+                    "successor": [
+                            "State4",
+                            "State5"
+                        ]
+                }
             ]
         }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
